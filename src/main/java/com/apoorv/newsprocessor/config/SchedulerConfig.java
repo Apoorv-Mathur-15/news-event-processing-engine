@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class SchedulerConfig {
 
-    private Integer poolingIntervalSeconds;
+    private Integer pollingIntervalSeconds;
 }
