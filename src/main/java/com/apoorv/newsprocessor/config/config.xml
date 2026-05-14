@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<applicationConfig>
+
+    <database>
+        <url>jdbc:mysql://localhost:3306/news_event_db</url>
+        <user>root</user>
+        <password>user123</password>
+    </database>
+
+    <api>
+        <baseUrl>https://newsapi.org/v2/top-headlines</baseUrl>
+        <apiKey>4b25a6ab06cd4b91b2ea441940ba7120</apiKey>
+        <pullLimit>10</pullLimit>
+        <connectionTimeout>5000</connectionTimeout>
+    </api>
+
+    <retry>
+        <retryLimit>3</retryLimit>
+        <retryIntervalSeconds>60</retryIntervalSeconds>
+    </retry>
+
+    <threadPool>
+        <corePoolSize>5</corePoolSize>
+        <maxPoolSize>10</maxPoolSize>
+        <queueCapacity>100</queueCapacity>
+    </threadPool>
+
+    <scheduler>
+        <pollingIntervalSeconds>30</pollingIntervalSeconds>
+    </scheduler>
+
+</applicationConfig>
