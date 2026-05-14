@@ -1,4 +1,4 @@
-package com;
+package com.apoorv.newsprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
