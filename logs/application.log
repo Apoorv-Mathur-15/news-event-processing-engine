@@ -542,3 +542,15 @@ Caused by: org.springframework.boot.jdbc.autoconfigure.DataSourceProperties$Data
 2026-05-14 17:18:29 [main] DEBUG c.a.n.NewsprocessorApplicationTests - Running with Spring Boot v4.0.6, Spring v7.0.7
 2026-05-14 17:18:29 [main] INFO  c.a.n.NewsprocessorApplicationTests - No active profile set, falling back to 1 default profile: "default"
 2026-05-14 17:18:32 [main] INFO  c.a.n.NewsprocessorApplicationTests - Started NewsprocessorApplicationTests in 3.809 seconds (process running for 6.151)
+2026-05-14 17:18:39 [restartedMain] INFO  c.a.n.NewsprocessorApplication - Starting NewsprocessorApplication using Java 24.0.2 with PID 24972 (D:\DSA UpGrad\news-event-processing-engine\target\classes started by mathu in D:\DSA UpGrad\news-event-processing-engine)
+2026-05-14 17:18:39 [restartedMain] DEBUG c.a.n.NewsprocessorApplication - Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-14 17:18:39 [restartedMain] INFO  c.a.n.NewsprocessorApplication - No active profile set, falling back to 1 default profile: "default"
+2026-05-14 17:18:39 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-14 17:18:39 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-14 17:18:41 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-05-14 17:18:41 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-14 17:18:41 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-14 17:18:41 [restartedMain] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1736 ms
+2026-05-14 17:18:41 [restartedMain] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-05-14 17:18:41 [restartedMain] INFO  c.a.n.NewsprocessorApplication - Started NewsprocessorApplication in 3.29 seconds (process running for 4.25)
+2026-05-14 17:18:41 [restartedMain] INFO  c.a.n.NewsprocessorApplication - Application started successfully
