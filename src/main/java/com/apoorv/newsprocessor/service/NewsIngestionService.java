@@ -42,12 +42,30 @@ public class NewsIngestionService {
 
         List<NewsEvent> newsEvents = new ArrayList<>();
 
+        int duplicateCount = 0;
+
         for(ArticleDto articleDto : response.getArticles()) {
+            if(articleDto.getUrl() == null || articleDto.getUrl().isBlank()) {
+                logger.warn("Skipping article with empty url");
+                continue;
+            }
+
+            boolean alreadyExists = newsEventRepository.findByArticleId(articleDto.getUrl()).isPresent();
+
+            if(alreadyExists) {
+                duplicateCount++;
+
+                logger.info("Duplicate article skipped: {}", articleDto.getUrl());
+                continue;
+            }
+
             NewsEvent newsEvent = newsEventMapper.mapArticleToEvent(articleDto);
             newsEvents.add(newsEvent);
         }
         newsEventRepository.saveAll(newsEvents);
 
-        logger.info("Successfully ingested news event", newsEvents.size());
+        logger.info("Successfully ingested {} news event", newsEvents.size());
+
+        logger.info("Duplicate articles skipped: {}", duplicateCount);
     }
 }

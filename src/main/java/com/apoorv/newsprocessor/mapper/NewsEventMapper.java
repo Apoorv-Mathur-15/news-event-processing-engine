@@ -7,14 +7,13 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Component
 public class NewsEventMapper {
 
     public NewsEvent mapArticleToEvent(ArticleDto articleDto) {
         NewsEvent newsEvent = new NewsEvent();
-        newsEvent.setArticleId(UUID.randomUUID().toString());
+        newsEvent.setArticleId(articleDto.getUrl());
 
         if(articleDto.getSource() != null) {
             newsEvent.setSourceName(articleDto.getSource().getName());
