@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ArticleDto {
 
-    private SourceDto sourceDto;
+    private SourceDto source;
 
     private String author;
     private String title;

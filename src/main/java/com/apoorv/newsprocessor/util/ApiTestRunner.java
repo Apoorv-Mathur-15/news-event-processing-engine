@@ -1,7 +1,7 @@
 package com.apoorv.newsprocessor.util;
 
 import com.apoorv.newsprocessor.dto.news.NewsApiResponseDto;
-import com.apoorv.newsprocessor.service.NewsApiService;
+import com.apoorv.newsprocessor.service.NewsIngestionService;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,21 +12,19 @@ public class ApiTestRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ApiTestRunner.class);
 
-    private final NewsApiService newsApiService;
+    private final NewsIngestionService newsIngestionService;
 
-    public ApiTestRunner(NewsApiService newsApiService) {
-        this.newsApiService = newsApiService;
+    public ApiTestRunner(NewsIngestionService newsIngestionService) {
+        this.newsIngestionService = newsIngestionService;
     }
 
     @PostConstruct
     public void testApiIntegration() {
 
-        logger.info("Starting News API Test Runner");
+        logger.info("News API injestion tes is starting");
 
-        NewsApiResponseDto response = newsApiService.fetchTopHeadlines();
+        newsIngestionService.ingestNewsEvent();
 
-        if(response != null && response.getArticles() != null) {
-            logger.info("Total articles fetched: {}", response.getArticles().size());
-        }
+        logger.info("News API injestion tes is completed");
     }
 }
