@@ -27,7 +27,7 @@
     </threadPool>
 
     <scheduler>
-        <pollingIntervalSeconds>30</pollingIntervalSeconds>
+        <pollingIntervalSeconds>10</pollingIntervalSeconds>
     </scheduler>
 
 </applicationConfig>
