@@ -1,5 +1,6 @@
 package com.apoorv.newsprocessor.scheduler;
 
+import com.apoorv.newsprocessor.service.EventProcessingService;
 import com.apoorv.newsprocessor.service.NewsIngestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +13,11 @@ public class NewsPollingScheduler {
 
     private final NewsIngestionService newsIngestionService;
 
-    public NewsPollingScheduler(NewsIngestionService newsIngestionService) {
+    private final EventProcessingService  eventProcessingService;
+
+    public NewsPollingScheduler(NewsIngestionService newsIngestionService, EventProcessingService eventProcessingService) {
         this.newsIngestionService = newsIngestionService;
+        this.eventProcessingService = eventProcessingService;
     }
 
     @Scheduled(
@@ -27,6 +31,7 @@ public class NewsPollingScheduler {
         try {
             logger.info("Starting scheduled polling of news event");
             newsIngestionService.ingestNewsEvent();
+            eventProcessingService.processNewEvents();
             logger.info("Successfully ingested scheduled news event");
         }
         catch (Exception exception) {
