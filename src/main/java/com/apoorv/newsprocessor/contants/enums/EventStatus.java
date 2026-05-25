@@ -9,5 +9,9 @@ public enum EventStatus {
 
     SUCCESS,
 
-    ERROR
+    ERROR,
+
+    FAILED,
+
+    RETRY_PENDING
 }

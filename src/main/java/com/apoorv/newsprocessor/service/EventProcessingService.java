@@ -1,5 +1,7 @@
 package com.apoorv.newsprocessor.service;
 
+import com.apoorv.newsprocessor.config.RetryConfig;
+import com.apoorv.newsprocessor.config.manager.ConfigManager;
 import com.apoorv.newsprocessor.contants.enums.EventStatus;
 import com.apoorv.newsprocessor.entity.NewsEvent;
 import com.apoorv.newsprocessor.repository.NewsEventRepository;
@@ -44,6 +46,10 @@ public class EventProcessingService {
             newsEventRepository.save(newsEvent);
 
             Thread.sleep(3000);
+
+            if(Math.random() < 0.3) {
+                throw  new RuntimeException("Stimulated processing failure");
+            }
             newsEvent.setStatus(EventStatus.SUCCESS);
             newsEvent.setUpdatedAt(LocalDateTime.now());
             newsEventRepository.save(newsEvent);
@@ -52,12 +58,32 @@ public class EventProcessingService {
         }
         catch (Exception exception) {
             logger.error("Error while processing news event: {}", newsEvent.getArticleId(), exception);
-            newsEvent.setRetryCount((newsEvent.getRetryCount() + 1));
+            int updatedRetryCount = newsEvent.getRetryCount() + 1;
+            newsEvent.setRetryCount(updatedRetryCount);
             newsEvent.setFailureReason(exception.getMessage());
-            newsEvent.setStatus(EventStatus.NEW);
+            RetryConfig retryConfig = ConfigManager.getApplicationConfig().getRetryConfig();
+            if(updatedRetryCount >= retryConfig.getRetryLimit()) {
+                newsEvent.setStatus(EventStatus.FAILED);
+                logger.error("Retry limit exceeded for event: {}",newsEvent.getArticleId());
+            }
+            else {
+                newsEvent.setStatus(EventStatus.RETRY_PENDING);
+                logger.error("Retry pending for event: {}",newsEvent.getArticleId());
+            }
             newsEvent.setUpdatedAt(LocalDateTime.now());
             newsEventRepository.save(newsEvent);
 
+        }
+    }
+
+    private void processRetryEvents() {
+        logger.info("Fetching retry events for processing");
+
+        List<NewsEvent> retryEvents = newsEventRepository.findByStatus(EventStatus.RETRY_PENDING);
+
+        logger.info("Found {} retry events for processing", retryEvents.size());
+        for (NewsEvent retryEvent : retryEvents) {
+            newsEventTaskExecutor.execute(() -> processEvent(retryEvent));
         }
     }
 }
