@@ -49,4 +49,7 @@ public class NewsEvent {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "next_retry_time")
+    private LocalDateTime nextRetryTime;
 }

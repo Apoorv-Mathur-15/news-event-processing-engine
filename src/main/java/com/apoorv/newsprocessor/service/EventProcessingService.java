@@ -47,7 +47,7 @@ public class EventProcessingService {
 
             Thread.sleep(3000);
 
-            if(Math.random() < 0.3) {
+            if(Math.random() > 0.3) {
                 throw  new RuntimeException("Stimulated processing failure");
             }
             newsEvent.setStatus(EventStatus.SUCCESS);
@@ -68,7 +68,9 @@ public class EventProcessingService {
             }
             else {
                 newsEvent.setStatus(EventStatus.RETRY_PENDING);
-                logger.error("Retry pending for event: {}",newsEvent.getArticleId());
+                LocalDateTime nextRetryTime = LocalDateTime.now().plusSeconds(retryConfig.getRetryIntervalSeconds());
+                newsEvent.setNextRetryTime(nextRetryTime);
+                logger.error("Event moved to RETRY_PENDING with nextRetryTime={} for event={}",nextRetryTime, newsEvent.getArticleId());
             }
             newsEvent.setUpdatedAt(LocalDateTime.now());
             newsEventRepository.save(newsEvent);
@@ -76,10 +78,11 @@ public class EventProcessingService {
         }
     }
 
-    private void processRetryEvents() {
+    public void processRetryEvents() {
         logger.info("Fetching retry events for processing");
 
-        List<NewsEvent> retryEvents = newsEventRepository.findByStatus(EventStatus.RETRY_PENDING);
+        //List<NewsEvent> retryEvents = newsEventRepository.findByStatus(EventStatus.RETRY_PENDING);
+        List<NewsEvent> retryEvents = newsEventRepository.findByStatusAndNextRetryTimeBefore(EventStatus.RETRY_PENDING, LocalDateTime.now());
 
         logger.info("Found {} retry events for processing", retryEvents.size());
         for (NewsEvent retryEvent : retryEvents) {

@@ -32,6 +32,7 @@ public class NewsPollingScheduler {
             logger.info("Starting scheduled polling of news event");
             newsIngestionService.ingestNewsEvent();
             eventProcessingService.processNewEvents();
+            eventProcessingService.processRetryEvents();
             logger.info("Successfully ingested scheduled news event");
         }
         catch (Exception exception) {

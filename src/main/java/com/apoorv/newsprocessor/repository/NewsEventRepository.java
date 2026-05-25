@@ -14,4 +14,6 @@ public interface NewsEventRepository extends JpaRepository<NewsEvent, Integer> {
     List<NewsEvent> findByStatus(EventStatus status);
 
     //List<NewsEvent> findByStatusAndRetryCountLessThan(EventStatus status, Integer retryCount);
+
+    List<NewsEvent> findByStatusAndNextRetryTimeBefore(EventStatus status, java.time.LocalDateTime currentTime);
 }
